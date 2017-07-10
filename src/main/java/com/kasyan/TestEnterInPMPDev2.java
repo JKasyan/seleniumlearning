@@ -12,11 +12,21 @@ public class TestEnterInPMPDev2 {
 
     public static void main(String[] args) throws InterruptedException {
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\1\\Desktop\\chromedriver.exe");
+        String operationSystemName = System.getProperty("os.name");
+        String pmpPassword = System.getenv("pmp_pass");
+        System.out.println("Operation system -> " + operationSystemName);
+
+        String driverPath = "src/main/resources/chromedriver";
+
+        if(operationSystemName.equals("Windows")) {
+            driverPath += ".exe";
+        }
+
+        System.setProperty("webdriver.chrome.driver", driverPath);
 
         WebDriver driver = new ChromeDriver();
 
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("https://pmpdev2-smartbox.cs89.force.com/s/login");
 
         List<WebElement> inputs = driver.findElements(By.tagName("input"));
@@ -28,7 +38,7 @@ public class TestEnterInPMPDev2 {
         WebElement passwordInput = inputs.get(1);
 
         loginInput.sendKeys("eugene.kasyas@pexlify.com.pmpdev2.community");
-        passwordInput.sendKeys("");
+        passwordInput.sendKeys(pmpPassword);
 
         WebElement loginButton = driver.findElement(By.className("slds-button--neutral"));
 
@@ -38,7 +48,15 @@ public class TestEnterInPMPDev2 {
         loginButton.click();
 
 
-        Thread.sleep(8000);
+        List<WebElement> menuItems = driver.findElements(By.className("menuItemLink"));
+        System.out.println(menuItems.size());
+
+        menuItems.get(3).click();
+
+        WebElement makeBookingInput = driver.findElement(By.tagName("input"));
+        makeBookingInput.sendKeys("123456789");
+
+        Thread.sleep(10000);
 
         driver.quit();
     }
