@@ -28,7 +28,7 @@ public class TestEnterInPMPDev2 {
         WebElement passwordInput = inputs.get(1);
 
         loginInput.sendKeys("eugene.kasyas@pexlify.com.pmpdev2.community");
-        passwordInput.sendKeys("Evgen4250022");
+        passwordInput.sendKeys("");
 
         WebElement loginButton = driver.findElement(By.className("slds-button--neutral"));
 
